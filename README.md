@@ -16,6 +16,8 @@
 ```python
 import random
 
+
+
 class Pou:
   # inciciar
   def __init__(self, name):
@@ -39,10 +41,9 @@ class Pou:
     return f"Name: {self.name}\nAge: {self.age}\nHunger: {self.hunger}\nEnergy: {self.energy}\nHappiness: {self.happiness}\nHealth: {self.health}"
 
   def play(self):
-    # self.hunger += 1
-    # self.energy += 1
-    # self.happiness += 1
-    # self.health += 1
+    pass
+
+ 
 
   def eat(self):
     pass
@@ -56,6 +57,13 @@ while True:
 
   if option == "play":
     toto.play()
+    toto.status()
+  elif option == "eat":
+    toto.eat()
+    toto.status()
+  elif option == "sleep":
+    toto.sleep()
+    toto.status()
   # add more methods
   else:
     break
