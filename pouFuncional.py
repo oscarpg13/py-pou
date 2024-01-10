@@ -1,72 +1,69 @@
 import random
 
 def minmax(value):
-  if value < 0:
-    return 0
-  elif value > 100:
-    return 100
-  else:
-    return value
+    return max(0, min(value, 100))
 
-class Pou:
-  # inciciar
-  def __init__(self, name):
-    self.name = name
-    self.age = 0
-    self.hunger = random.randint(0, 50)
-    self.energy = random.randint(50, 100)
-    self.happiness = random.randint(50, 100)
-    self.health = 100
-    self.alive = True
+def iniciar(nombre):
+    return {
+        'Nombre': nombre,
+        'Edad': 0,
+        'Hambre': random.randint(0, 50),
+        'Energia': random.randint(50, 100),
+        'Felicidad': random.randint(50, 100),
+        'Salud': 100,
+        'Estado': True
+    }
 
-  def status(self):
-    print("Name:", self.name)
-    print("Age:", self.age)
-    print("Hunger:", self.hunger)
-    print("Energy:", self.energy)
-    print("Happiness:", self.happiness)
-    print("Health:", self.health)
+def estado(pou):
+    print("Nombre:", pou['Nombre'])
+    print("Edad:", pou['Edad'])
+    print("Hambre:", pou['Hambre'])
+    print("Energia:", pou['Energia'])
+    print("Felicidad:", pou['Felicidad'])
+    print("Salud:", pou['Salud'])
 
-  def __str__(self):
-    return f"Name: {self.name}\nAge: {self.age}\nHunger: {self.hunger}\nEnergy: {self.energy}\nHappiness: {self.happiness}\nHealth: {self.health}"
+def jugar(pou):
+    pou['Hambre'] = minmax(pou['Hambre'] + random.randint(5, 10))
+    pou['Energia'] = minmax(pou['Energia'] - random.randint(10, 20))
+    pou['Felicidad'] = minmax(pou['Felicidad'] + random.randint(5, 10))
+    pou['Salud'] = minmax(pou['Salud'] - random.randint(5, 15))
+    pou['Edad'] += 1
 
-  def play(self):
-    self.hunger = minmax(self.hunger + random.randint(5,10))
-    self.energy = minmax(self.energy - random.randint(10,20))
-    self.happiness = minmax(self.happiness + random.randint(5,10))
-    self.health = minmax(self.health + random.randint(0,5))
-    self.age += 1
+def dormir(pou):
+    pou['Hambre'] = minmax(pou['Hambre'] + random.randint(5, 10))
+    pou['Energia'] = minmax(pou['Energia'] + random.randint(10, 20))
+    pou['Felicidad'] = minmax(pou['Felicidad'] - random.randint(5, 10))
+    pou['Salud'] = minmax(pou['Salud'] + random.randint(0, 5))
+    pou['Edad'] -= 1
 
-  def sleep(self):
-    self.hunger = minmax(self.hunger + random.randint(5,10))
-    self.energy = minmax(self.energy + random.randint(30,60))
-    self.happiness = minmax(self.happiness + random.randint(0,3))
-    self.health = minmax(self.health + random.randint(0,5))
-    self.age -= 1
+def comer(pou):
+    pou['Hambre'] = minmax(pou['Hambre'] - random.randint(5, 10))
+    pou['Energia'] = minmax(pou['Energia'] + random.randint(10, 20))
+    pou['Felicidad'] = minmax(pou['Felicidad'] + random.randint(5, 10))
+    pou['Salud'] = minmax(pou['Salud'] + random.randint(0, 5))
+    pou['Edad'] += 1
 
-  def eat(self):
-    self.hunger = minmax(self.hunger - random.randint(5,10))
-    self.energy = minmax(self.energy + random.randint(30,60))
-    self.happiness = minmax(self.happiness + random.randint(0,3))
-    self.health = minmax(self.health + random.randint(0,5))
-    self.age += 1
+def morir(pou):
+    pou['Estado'] = False
 
-  # add more methods
+toto = iniciar("Churumbel")
+estado(toto)
 
-toto = Pou("Toto")
+while toto['Estado']:
+    option = input("¿Que quieres que haga? (jugar, comer, dormir, salir): ")
+    estado(toto)
 
-while True:
-  option = input("What do you want to do? (play, eat, sleep, exit): ")
-  toto.status()
-  if option == "play":
-    toto.play()
+    if option == "jugar":
+        jugar(toto)
+    elif option == "comer":
+        comer(toto)
+    elif option == "dormir":
+        dormir(toto)
     
-  elif option == "eat":
-    toto.eat()
-    
-  elif option == "sleep":
-    toto.sleep()
-    
-  # add more methods
-  else:
-    break
+    if toto['Salud'] <= 0:
+        print("Tu Pou ha muerto.")
+        morir(toto)
+        break
+
+    elif option == "salir":
+        break
