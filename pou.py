@@ -35,18 +35,21 @@ class Pou:
     self.energy = minmax(self.energy - random.randint(10,20))
     self.happiness = minmax(self.happiness + random.randint(5,10))
     self.health = minmax(self.health + random.randint(0,5))
+    self.age += 1
 
   def sleep(self):
     self.hunger = minmax(self.hunger + random.randint(5,10))
     self.energy = minmax(self.energy + random.randint(30,60))
     self.happiness = minmax(self.happiness + random.randint(0,3))
     self.health = minmax(self.health + random.randint(0,5))
+    self.age -= 1
 
   def eat(self):
     self.hunger = minmax(self.hunger - random.randint(5,10))
     self.energy = minmax(self.energy + random.randint(30,60))
     self.happiness = minmax(self.happiness + random.randint(0,3))
     self.health = minmax(self.health + random.randint(0,5))
+    self.age += 1
 
   # add more methods
 
